@@ -1,0 +1,33 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int a, b, c;
+
+    cout << "Enter first integer: ";
+    cin >> a;
+    cout << "Enter second integer: ";
+    cin >> b;
+    cout << "Enter third integer: ";
+    cin >> c;
+
+    int* ptr1 = new int(a);
+    int* ptr2 = new int(b);
+    int* ptr3 = new int(c);
+
+    cout << "\nValues from variables:" << endl;
+    cout << "a = " << a << endl;
+    cout << "b = " << b << endl;
+    cout << "c = " << c << endl;
+
+    cout << "\nValues from pointers:" << endl;
+    cout << "*ptr1 = " << *ptr1 << endl;
+    cout << "*ptr2 = " << *ptr2 << endl;
+    cout << "*ptr3 = " << *ptr3 << endl;
+
+    delete ptr1;
+    delete ptr2;
+    delete ptr3;
+
+    return 0;
+}
