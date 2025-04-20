@@ -1,0 +1,32 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+    string filePath = "C:\\Users\\lifeg\\OneDrive\\Desktop\\Comp Sci\\CSC450\\Module5\\CSC450_CT5_mod5.txt";
+    string reversePath = "C:\\Users\\lifeg\\OneDrive\\Desktop\\Comp Sci\\CSC450\\Module5\\CSC450-mod5-reverse.txt";
+
+    string userInput;
+    cout << "Enter the Text to add to file ";
+    getline(cin, userInput);
+
+    ofstream outFile(filePath, ios::app);
+    outFile << userInput << endl;
+    outFile.close();
+
+    ifstream inFile(filePath);
+    string content((istreambuf_iterator<char>(inFile)), (istreambuf_iterator<char>()));
+    inFile.close();
+
+    reverse(content.begin(), content.end());
+
+    ofstream reverseFile(reversePath);
+    reverseFile << content;
+    reverseFile.close();
+
+    cout << "Reverse Executed" << endl;
+    return 0;
+}
