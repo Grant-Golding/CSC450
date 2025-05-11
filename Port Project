@@ -1,0 +1,44 @@
+public class ThreadCountTest {
+
+    private static final Object lock = new Object();
+    private static boolean isCountUpFinished = false;
+
+    public static void main(String[] args) throws InterruptedException {
+        Thread countUpThread = new Thread(() -> {
+            for (int i = 0; i <= 20; i++) {
+                System.out.println("Count Up [Thread " + Thread.currentThread().getName() + "]: " + i);
+            }
+
+            synchronized (lock) {
+                isCountUpFinished = true;
+                lock.notify();
+            }
+        });
+
+        Thread countDownThread = new Thread(() -> {
+            synchronized (lock) {
+                while (!isCountUpFinished) {
+                    try {
+                        lock.wait();
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        return;
+                    }
+                }
+            }
+
+            for (int i = 20; i >= 0; i--) {
+                System.out.println("Count Down [Thread " + Thread.currentThread().getName() + "]: " + i);
+            }
+        });
+
+        countUpThread.setName("CountUp");
+        countDownThread.setName("CountDown");
+
+        countUpThread.start();
+        countDownThread.start();
+
+        countUpThread.join();
+        countDownThread.join();
+    }
+}
